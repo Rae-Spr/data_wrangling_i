@@ -247,3 +247,9 @@ write_csv(lotr_words, file = "data/lotr_words_df.csv")
 ## Why not base r???
 
 don’t use read.csv! only use read_csv.
+
+Tidyverse = CSVs
+
+ReadXL = excels
+
+Haven = SAS, other file types
