@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+
+## in case something has patient data or something else confidential 
+## or if the file is too big to put on github 
+
+results/
