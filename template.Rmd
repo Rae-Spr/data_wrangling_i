@@ -4,4 +4,46 @@ author: Rae Spriggs
 output: github_document
 ---
 
+```{r, echo = FALSE, message = FALSE}
+library(tidyverse)
+```
+
+
 ## Data Import: CSVs
+
+Let's import data using the `readr` package. 
+
+```{r}
+litters_df = read.csv("./data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+
+Look at the data 
+
+```{r}
+litters_df
+
+head(litters_df)
+tail(litters_df)
+```
+
+
+```{r, eval = FALSE}
+view(litters_df)
+```
+
+
+```{r}
+skimr::skim(litters_df)
+```
+
+`read_csv` options ... 
+example to get rid of our missing data
+
+```{r, eval = FALSE}
+read_csv("data/FAS_litters.csv", na = c("", "NA", 999))
+```
+
+
+## Other file formats 
+
