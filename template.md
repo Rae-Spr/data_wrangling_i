@@ -203,3 +203,47 @@ read_csv("data/FAS_litters.csv", na = c("", "NA", 999))
 ```
 
 ## Other file formats
+
+We need to read in an excel spreadsheet.
+
+``` r
+mlb_df = read_excel("data/mlb11.xlsx")
+```
+
+``` r
+view(mlb_df)
+```
+
+``` r
+lotr_words = read_excel(
+  "data/LotR_Words.xlsx", 
+  range = "B3:D6"
+)
+```
+
+``` r
+view(lotr_words)
+lotr_words
+```
+
+## Still more formats
+
+Read in SAS dataset
+
+``` r
+pulse_df = read_sas("data/public_pulse_data.sas7bdat")
+```
+
+``` r
+view(pulse_df)
+```
+
+## Data export
+
+``` r
+write_csv(lotr_words, file = "data/lotr_words_df.csv")
+```
+
+## Why not base r???
+
+don’t use read.csv! only use read_csv.
