@@ -306,3 +306,23 @@ litters_data
     ## 3 con7  #5/5/3/83/3-3       26          41.4          19       6       0    15.4
     ## # … with 28 more rows, and abbreviated variable names ¹​pups_born_alive,
     ## #   ²​pups_dead_birth
+
+In this example, the dataset argument is called dat in
+janitor::clean_names, .data in the dplyr functions, and data in drop_na
+– which is definitely confusing. In the majority of cases (and
+everywhere in the tidyverse) you’ll elide the first argument and be
+happy with life, but there are some cases where the placeholder is
+necessary. For example, to regress wt_gain on pups_born_alive, you might
+use:
+
+``` r
+litters_data %>%
+  lm(wt_gain ~ pups_born_alive, data = .) %>%
+  broom::tidy()
+```
+
+    ## # A tibble: 2 × 5
+    ##   term            estimate std.error statistic  p.value
+    ##   <chr>              <dbl>     <dbl>     <dbl>    <dbl>
+    ## 1 (Intercept)       13.1       1.27      10.3  3.39e-11
+    ## 2 pups_born_alive    0.605     0.173      3.49 1.55e- 3
