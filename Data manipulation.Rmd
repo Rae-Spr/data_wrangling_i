@@ -7,9 +7,9 @@ output: github_document
 
 Once you've imported data, you're going to need to do some cleaning up. 
 
-```{r}
+```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
+  collapse = FALSE,
   fig.width = 6,
   fig.asp = 6, 
   out.width = "90%"
@@ -29,7 +29,7 @@ pups_data = read_csv("./data/FAS_pups.csv",
 pups_data = janitor::clean_names(pups_data)
 ```
 
-## Ways to select variables / certain data
+# Ways to SELECT variables (entire columns)
 
 ```{r}
 select(litters_data, group, litter_number, gd0_weight, pups_born_alive)
@@ -69,5 +69,68 @@ select(litters_data, litter_number, pups_survive, everything())
 
 ```{r}
 relocate(litters_data, litter_number, pups_survive)
+```
+
+# Ways to FILTER observations (entire rows)
+
+You will often filter using comparison operators (>, >=, <, <=, ==, and !=). You may also use %in% to detect if values appear in a set, and is.na() to find missing values. The results of comparisons are logical – the statement is TRUE or FALSE depending on the values you compare – and can be combined with other comparisons using the logical operators & and |, or negated using !.
+
+Filtering certain observations by logical criteria 
+```{r}
+filter(litters_data, 
+gd_of_birth == 20,
+pups_born_alive >= 2,
+pups_survive != 4,
+!(pups_survive == 4))
+
+```
+
+```{r}
+filter(litters_data, group %in% c("Con7", "Con8"))
+```
+
+```{r}
+filter(litters_data, group == "Con7" & gd_of_birth == 20)
+```
+
+## Drop NA function
+
+```{r}
+library(tidyr)
+drop_na(litters_data) 
+```
+
+# Ways to MUTATE data (change or create new variables)
+
+```{r}
+mutate(litters_data,
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group)
+)
+```
+
+# Ways to ARRANGE data (sorting rows in data)
+
+```{r}
+head(arrange(litters_data, desc(group), pups_born_alive), 10)
+
+## head function lets you print the first 10 observations
+## desc is descending for the variable it's applied to 
+```
+
+# PIPING / %>% 
+
+Shorthand is CMD + SHIFT + M for %>%
+```{r}
+litters_data = 
+  read_csv("./data/FAS_litters.csv", col_types = "ccddiiii") %>%
+  janitor::clean_names() %>%
+  select(-pups_survive) %>%
+  mutate(
+    wt_gain = gd18_weight - gd0_weight,
+    group = str_to_lower(group)) %>% 
+  drop_na(wt_gain)
+
+litters_data
 ```
 
